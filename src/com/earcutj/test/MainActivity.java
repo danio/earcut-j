@@ -373,6 +373,71 @@ public final class MainActivity {
 			System.out.println(triangleArea(minimalWindingFailingExample[0]));
 			System.exit(1);
 		}
+
+		// Simple rectangle
+		final float[][][] simpleRectangle = new float[][][] {
+			new float[][] {
+				new float[]{10, 10},
+				new float[]{30, 10},
+				new float[]{30, 20},
+				new float[]{10, 20}
+			}
+		};
+		List<float[][]> simpleRectangleTriangles = Earcut.earcut(simpleRectangle, true);
+		if (trianglesArea(simpleRectangleTriangles) != 200) {
+			System.out.println("simpleRectangle failed");
+			System.out.println(trianglesArea(simpleRectangleTriangles));
+			System.exit(1);
+		}
+
+		// Simple rectangle with hole
+		final float[][][] simpleRectangleWithHole = new float[][][] {
+			// a rectangle from (10, 10) to (30, 20)
+			new float[][] {
+				new float[]{10, 10},
+				new float[]{30, 10},
+				new float[]{30, 20},
+				new float[]{10, 20}
+			},
+			// with a hole from (20, 12) to (25, 16)
+			new float[][]{
+				new float[]{20, 12},
+				new float[]{25, 12},
+				new float[]{25, 16},
+				new float[]{20, 16}
+			}
+		};
+		List<float[][]> simpleRectangleWithHoleTriangles = Earcut.earcut(simpleRectangleWithHole, true);
+		if (trianglesArea(simpleRectangleWithHoleTriangles) != 200 - 20) {
+			System.out.println("simpleRectangleWithHole failed");
+			System.out.println(trianglesArea(simpleRectangleWithHoleTriangles));
+			System.exit(1);
+		}
+
+		// Polygon with hole
+		final float[][][] holeExample = new float[][][] {
+			new float[][] {
+				new float[]{3.0479999999559757f, -24.3744744186397f},
+				new float[]{3.0479999999559757f, -9.134474999999567f},
+				new float[]{3.352799999955975f, -9.134474999999567f},
+				new float[]{3.352799999955975f, -3.6480749999995656f},
+				new float[]{7.924799999955975f, -3.6480750000152398f},
+				new float[]{7.924799999955975f, -24.374474418655375f}
+			},
+			// a hole
+			new float[][]{
+				new float[]{5.892849609330605f, -6.594474224853127f},
+				new float[]{6.502449609330606f, -6.594474224853127f},
+				new float[]{6.502449609330606f, -7.2040742248531275f},
+				new float[]{5.892849609330605f, -7.2040742248531275f}
+			}
+		};
+		List<float[][]> holeExampleTriangles = Earcut.earcut(holeExample, true);
+		if (holeExampleTriangles.size() != 10) {
+			System.out.println("holeExample failed");
+			System.out.println(holeExampleTriangles.size());
+			System.exit(1);
+		}
 	}
 
 }
